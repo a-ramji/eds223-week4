@@ -221,6 +221,8 @@ scale or number of cells from lowest to highest
 
     -   ex: normalized difference vegetation index (NDVI) = NIR - Red / NIR + Red
 
+-   maintains spatial data
+
 ## focal operations
 
 -   applies an aggregation function to all cells within a specified neighborhood, uses the corresponding output as the new value for the central cell, and moves on to the next central cell
@@ -231,6 +233,22 @@ scale or number of cells from lowest to highest
 
     -   kernel, filter, moving window
 
+-   maintains spatial data
+
+-   example -- slope of terrain
+
+-   to find slope, you need the points around it
+
 ## zonal operations
 
 -   applies an agg function to multiple cells based on a grouping variable
+
+-   doesn't maintain spatial data
+
+-   kind of like group by, summarize
+
+-   
+
+## global
+
+-   
