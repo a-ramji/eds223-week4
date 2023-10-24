@@ -170,3 +170,39 @@ terra
 -   resolution, extent, and position have to match
 
 in vectors, we ask if they intersect, in raster you have to make them intersect in a way
+
+## map algebra
+
+-   operations that modify or summarize raster cell values
+
+-   power of the Matrix :)
+
+    -   matrices are much more efficient than dataframes
+
+    -   computationally fast math
+
+-   raster data is a matrix of rows and columns
+
+-   raster is faster, vector is corrector
+
+    -   not as correct bc summarizing into grids
+
+scale or number of cells from lowest to highest
+
+-   local
+
+    -   cell-by-cell operations in one or several layers
+
+    -   addition, exponential, log, logical/conditional
+
+    -   not using the value of one cell to do anything to another
+
+    -   can do this across layers, considering each cell by itself
+
+    -   ex: normalized difference vegetation index (NDVI) = NIR - Red / NIR + Red
+
+-   focal
+
+-   zonal
+
+-   global
