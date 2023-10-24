@@ -307,8 +307,16 @@ Here we define map algebra as the set of operations that modify or summarize ras
 Local operations are computed on each cell individually. We can use oridinary arithemetic or logical statements.
 
 ```{r include=TRUE}
+elev + elev
+# created a new raster that is just doubling the values in every cell
 
+elev^2
+# raised them to the power of 2
 
+# log :)
+log(elev)
+
+elev > 5 # filter, returns logical 
 ```
 
 We can also classify intervals of values into groups. For example, we could classify a DEM into low, middle, and high elevation cells
@@ -332,20 +340,32 @@ We can use the **lapp()** function to compute the Normalized Difference Vegetati
 Let's calculate NDVI for Zion National Park using multispectral satellite data.
 
 ```{r include=TRUE}
+# creating our own NDVI layer
+# can look at reflection of _infrared__ to figure out what material is being sensed
+multi_rast
+
+
 
 
 ```
 
 We need to define a function to calculate NDVI.
 ```{r include=TRUE}
-
+ndvi_fun <- function(nir, red){
+  (nir - red) / (nir + red)
+}
 
 ```
 
 So now we can use **lapp()** to calculate NDVI in each raster cell. To do so, we just need the NIR and red bands.
 
 ```{r include=TRUE}
+# apply the function
+ndvi_rast <- lapp(multi_rast[[c(3, 4)]], fun = ndvi_fun)
+# for every value, we subtracted the value from cell 4 from cell 3, then divided by their sum
 
+
+plot(ndvi_rast)
 
 ```
 
@@ -356,8 +376,12 @@ Local operations operate on one cell, though from multiple layers. Focal operati
 We can use the **focal()** function to perform spatial filtering. We define the size, shape, and weights of the moving window using a matrix. Here we find the minimum.
 
 ```{r include=TRUE}
+# define the size, shape, and weights of the moving window -- what the neighborhood we want to use is, what op. we want 
+r_focal <- focal(elev, w = matrix(1, nrow = 3, ncol = 3), fun = min)
+r_focal
 
-
+plot(elev)
+plot(r_focal)
 ```
 
 ## zonal operations

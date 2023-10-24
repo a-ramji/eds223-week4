@@ -206,3 +206,27 @@ scale or number of cells from lowest to highest
 -   zonal
 
 -   global
+
+## local operations
+
+-   local
+
+    -   cell-by-cell operations in one or several layers
+
+    -   addition, exponential, log, logical/conditional
+
+    -   not using the value of one cell to do anything to another
+
+    -   can do this across layers, considering each cell by itself
+
+    -   ex: normalized difference vegetation index (NDVI) = NIR - Red / NIR + Red
+
+## focal operations
+
+-   applies an aggregation function to all cells within a specified neighborhood, uses the corresponding output as the new value for the central cell, and moves on to the next central cell
+
+-   examples:
+
+    -   smoothing: Gaussian kernel
+
+    -   kernel, filter, moving window
