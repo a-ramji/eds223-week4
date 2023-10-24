@@ -95,4 +95,44 @@ what do we do?
 
 -   where cell origin is
 
-![](images/raster-position.png)
+![](images/raster-position.png){width="656"}
+
+Note: can only stack if they have the same resolution, extent, and position
+
+temporal radiometric, symmetric resolutions w diff remote sensing strats
+
+## new tools for a new data type
+
+![](images/new-data-tool.png)
+
+-   matrix
+
+-   single layer in a raster is like a single column in our data frame
+
+## subsetting
+
+-   dplyr fitler() etc.
+
+-   can't do that anymore!!
+
+have to switch gears and learn a whole new language
+
+sp, been decommissioned in the last month, now sf
+
+raster
+
+sf (now the most popular)
+
+-   can't handle raster objects
+
+terra
+
+-   raster :)
+
+-   user-friendly package for dealing w raster data (terra, along w stars)
+
+-   also has some ability to handle vector data
+
+-   resolution is extent divided by number of boxes
+
+## clipping
