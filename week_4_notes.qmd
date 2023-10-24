@@ -31,6 +31,8 @@ editor: visual
 
 ![](images/raster-data-models.png)
 
+## raster data models
+
 geometry
 
 -   cell size
@@ -66,3 +68,31 @@ what do we do?
 -   grid cells are the same, values correspond to something different
 
 -   "stack"
+
+![](images/raster-stack.png){width="514"}
+
+-   each raster is a layer
+
+-   all in the same place = stack (we can stack them on top of each other)
+
+-   placement matters
+
+![](images/raster-resolution.png)
+
+## spatial resolution
+
+-   cell size --\> resolution
+
+-   more cells = finer/higher res
+
+-   fewer cells = coarser/lower res
+
+## extent
+
+![](images/raster-extent.png)
+
+## position
+
+-   where cell origin is
+
+![](images/raster-position.png)
