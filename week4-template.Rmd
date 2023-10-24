@@ -389,7 +389,15 @@ Similar to focal operations, zonal operations apply an aggregation function to m
 
 For example, we could find the average elevation for different soil grain sizes.
 ```{r include=TRUE}
+plot(grain)
+# kind of look like zones
+# not spatially continuous -- dist. isn't cont.
 
+test6 <- zonal(elev, grain, fun = mean, na.rm = TRUE)
+zonal(elev, grain, fun = mean, na.rm = TRUE)
+
+# it's not a raster anymore
+class(test6)
 
 ```
 

@@ -230,3 +230,7 @@ scale or number of cells from lowest to highest
     -   smoothing: Gaussian kernel
 
     -   kernel, filter, moving window
+
+## zonal operations
+
+-   applies an agg function to multiple cells based on a grouping variable
