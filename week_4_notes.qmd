@@ -109,7 +109,7 @@ temporal radiometric, symmetric resolutions w diff remote sensing strats
 
 -   single layer in a raster is like a single column in our data frame
 
-## subsetting
+# subsetting
 
 -   dplyr fitler() etc.
 
@@ -135,4 +135,38 @@ terra
 
 -   resolution is extent divided by number of boxes
 
+-   note: there's a package called tidyterra that lets you do some tidyverse stuff in terra
+
 ## clipping
+
+-   if we have a bigger raster (bigger extent)
+
+-   have a smaller extent
+
+-   want them to match the same extent
+
+-   clip the bigger one to match the smaller one
+
+-   trimming a bigger piece of paper to match a smaller piece of paper
+
+-   can be different resolutions
+
+## masking
+
+-   might want to subset to cells that are distributed around the raster
+
+-   create a mask that you can then apply to our raster
+
+-   make a mask of the cells you want to end up with
+
+-   logical values in a raster
+
+    -   create a raster that is T/F, empty = false, desired ones are true
+
+    -   apply the mask to the raster to get the cells you want (zones you want, for example)
+
+-   like intersection
+
+-   resolution, extent, and position have to match
+
+in vectors, we ask if they intersect, in raster you have to make them intersect in a way
