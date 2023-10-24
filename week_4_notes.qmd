@@ -1,0 +1,68 @@
+---
+title: "Week 4 Notes"
+author: "Anna Ramji"
+format: html
+editor: visual
+---
+
+# Week 4 
+
+## Tuesday, October 24, 2023
+
+## Spatial data models
+
+-   vector data
+
+    -   points, lines, polygons
+
+        -   limitations
+
+    -   discrete
+
+-   raster data
+
+    -   grid
+
+        -   putting everything into little boxes
+
+    -   continuous
+
+![](images/vector-allison-drawing.png)
+
+![](images/raster-data-models.png)
+
+geometry
+
+-   cell size
+
+-   number of rows/columns
+
+-   cell origin
+
+-   CRS
+
+attribute
+
+-   one value per cell
+
+    -   categorical, numerical, logical
+
+        -   examples: categorical( land cover (forest, grassland)), logical (true/false -- is it water?), numerical (avg temp)
+
+        -   size of cell -- resolution
+
+in vector data, for every row, we could have many columns
+
+in raster, we only get one attribute per cell (one column)
+
+-   ex, only PM 2.5
+
+what do we do?
+
+-   make a bunch of them
+
+-   layers
+
+-   grid cells are the same, values correspond to something different
+
+-   "stack"
