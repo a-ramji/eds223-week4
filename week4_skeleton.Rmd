@@ -111,8 +111,20 @@ ndvi_rast
 ```
 
 ```{r}
+combine_rast = c(ndvi_rast, ndwi_rast)
 
+plot(combine_rast)
+
+?layerCor
 ```
+
+
+```{r}
+layerCor(combine_rast, fun = cor) # using just cor (full correlation matrix between these layers)
+
+# values indicate that they are quite similar -- almost opposite, but not quite
+```
+
 
 Use `terra::distance()` to compute distances from all cells of spain to it's nearest coastline. According to the documentation, terra::distance() will calculate distance for all cells that are NA to the nearest cell that are not NA
 
