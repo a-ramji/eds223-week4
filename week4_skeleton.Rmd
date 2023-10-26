@@ -26,7 +26,12 @@ srtm = rast(system.file("raster/srtm.tif", package = "spDataLarge"))
 
 ## Exercise 1: Plot the histogram and the boxplot of the dem.tif file from the spDataLarge package
 
-```{r}
+```{r dem.tif hist and boxplot}
+
+# creating a histogram of the dem.tif file
+hist(dem) # base R histogram, good for prelim data exploration
+
+boxplot(dem) # base R boxplot
 
 ```
 
@@ -34,19 +39,64 @@ srtm = rast(system.file("raster/srtm.tif", package = "spDataLarge"))
 
 reclassify the elevation in three classes: low (<300), medium and high (>500). 
 
-```{r}
+```{r reclassify levels}
 plot(dem)
+
+# Inf = infinity
+rcl = matrix(c(-Inf, 300, 0, # lowest value of first category, highest value of first category, category number = 0
+               300, 500, 1, # lowest value of second category, highest value of second category, category number = 1
+               500, Inf, 2), # lowest value of third category, highest value of third category, category number = 2 (these numbers of arbitrary, only matters for "id" vector in renaming levels)
+             ncol = 3,  # 3 columns
+             byrow = TRUE) # default is by column
+# can't have multiple data types in one matrix i guess?
+
+rcl
+
+?classify
+# reclassify the raster
+dem_rcl <- classify(dem, rcl = rcl)
+
+# update 0, 1, 2 to be low, medium, high
+# make a dataframe where ID = 0:2
+levels(dem_rcl) = data.frame(id = 0:2, cats = c("low", "medium", "high"))
+
+# view plot
+plot(dem_rcl)
+
 ```
 
 compute the mean elevation for each altitudinal class
+- zonal function
 
-```{r}
+```{r zonal}
+elevation_mean = zonal(dem, # first raster layer object
+                       dem_rcl, # raster layer with codes representing zones, reclassified
+                       fun = "mean" # function for summary stats
+                       ) 
+
+# like group by, summarize
+
+elevation_mean
+
 ```
 
 Calculate the Normalized Difference Water Index (NDWI; (green - nir)/(green + nir)) of a Landsat image.
 
-```{r}
 
+```{r ndwi}
+plot(landsat) # base R works well for plotting basic rasters with not too many layers
+
+ndwi_fun = function(green, nir) {
+  (green - nir) / (green + nir)
+}
+
+ndwi_rast = lapp(landsat[[c(2,  # green channel
+                            4) # nir channel (layers from landsat, in documentation)
+                          ]], 
+                 fun = ndwi_fun) # specifying function to apply
+ndwi_rast
+
+plot(ndwi_rast)
 ```
 
 calculate a correlation between NDVI and NDWI for this area
@@ -57,6 +107,7 @@ ndvi_fun = function(nir, red){
 }
 
 ndvi_rast = lapp(landsat[[c(4, 3)]], fun = ndvi_fun)
+ndvi_rast
 ```
 
 ```{r}
