@@ -115,39 +115,103 @@ combine_rast = c(ndvi_rast, ndwi_rast)
 
 plot(combine_rast)
 
-?layerCor
 ```
 
 
 ```{r}
+# ?layerCor
+
 layerCor(combine_rast, fun = cor) # using just cor (full correlation matrix between these layers)
 
 # values indicate that they are quite similar -- almost opposite, but not quite
+
+# correlation between the values in the matrix
 ```
 
 
 Use `terra::distance()` to compute distances from all cells of spain to it's nearest coastline. According to the documentation, terra::distance() will calculate distance for all cells that are NA to the nearest cell that are not NA
 
-```{r}
+```{r spain}
 spain_dem = aggregate(spain_dem, fact = 20)
 plot(spain_dem)
 
 ```
 
-Try to modify the approach used in the above exercise by weighting the distance raster with the elevation raster; every 100 altitudinal meters should increase the distance to the coast by 10 km. Next, compute and visualize the difference between the raster created using the Euclidean distance (E7) and the raster weighted by elevation.
+```{r spain mask plot}
+# calculate distance for all cells that are NA to the nearest cell that are not NA
+# calculate distance from all points to nearest coastline
+
+# create a mask for the water
+
+water_mask = is.na(spain_dem)
+
+plot(water_mask) # true false mask where Spain is False, water outside is True
+
+# anywhere that its false, update to NA for our terra::distance()
+water_mask[water_mask == 0] = NA
+
+plot(water_mask)
+
+
+distance_to_coast <- terra::distance(water_mask) # default is meters
+
+# convert to km
+distance_to_coast_km <- distance_to_coast / 1000
+
+# plot how far from the coast every point in Spain is
+plot(distance_to_coast_km, main = "Distance to Coast in Spain (km)")
+
+```
+
+
+Try to modify the approach used in the above exercise by weighting the distance raster with the elevation raster; **every 100 altitudinal meters should increase the distance to the coast by 10 km.** Next, compute and visualize the difference between the raster created using the Euclidean distance (E7) and the raster weighted by elevation.
 
 ```{r}
+# straight linear distance isn't super accurate (doesn't account for elevation)
+
+distance_to_coast_km2 <- distance_to_coast_km + ((spain_dem / 100) * 10) # adds some amount of distance for every meter elevation
+
+
+plot(distance_to_coast_km)
+plot(distance_to_coast_km2)
+
+# skipped Euclidean distance part
 
 ```
 
 
 ## Exercise 3:: Geometry Operations with Rasters
 
-The srtm raster has a resolution of 0.00083 by 0.00083 degrees. Change its resolution to 0.01 by 0.01 degrees using all of the method available in the terra package. Visualize the results. 
+The srtm raster has a resolution of **0.00083 by 0.00083** degrees. Change its resolution to **0.01 by 0.01** degrees using all of the method available in the terra package. Visualize the results. 
 
-```{r}
+```{r resample}
 plot(srtm)
 
+# extent of srtm raster, resolution of 0.01
+rast_template <- rast(ext(srtm), res = 0.01)
+
+# ?resample
+srtm_resampl1 <- resample(x = srtm, 
+                          y = rast_template, 
+                          method = "near")
+
+srtm_resampl2 <- resample(x = srtm, 
+                          y = rast_template, 
+                          method = "bilinear")
+srtm_resampl3 <- resample(x = srtm, 
+                          y = rast_template, 
+                          method = "cubic")
+
+srtm_resampl4 <- resample(x = srtm, 
+                          y = rast_template, 
+                          method = "cubicspline")
+srtm_resampl5 <- resample(x = srtm, 
+                          y = rast_template, 
+                          method = "lanczos")
+srtm_all = c(srtm_resampl1, srtm_resampl2, srtm_resampl3, srtm_resampl4, srtm_resampl5)
+
+# viewing which method: nearest neighbor, bilinear/cubic/cubicspline interpolation, lanczos windowed sinc rsampling makes the most sense / looks the best
+plot(srtm_all)
 ```
 
 ```{r}
@@ -157,3 +221,9 @@ plot(srtm_resampl_all)
 ```
 
 Please take this [survey](https://forms.gle/P6EneoEW7GY56LP16) to give me feedback on last week and this week!
+
+
+```{r}
+layerCor(srtm_all, fun = cor)
+```
+
